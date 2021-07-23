@@ -1,22 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
+import Message from './components/Message'
+
+
 
 function App() {
+
+  const str = "Изучение React предполагает наличие некоторых знаний о программировании на языке JavaScript. Глубоких знаний не потребуется, но учить React и JavaScript одновременно может быть тяжело.";
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Message text={str} />
       </header>
     </div>
   );
