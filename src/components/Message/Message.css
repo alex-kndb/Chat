@@ -1,0 +1,17 @@
+.message {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.message__author{
+    margin-bottom: 5px;
+    color:darkblue;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.message__text{
+    text-transform: capitalize;
+    color: crimson
+}
+
