@@ -8,6 +8,10 @@
 }
 
 .App-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 600px;
   width: 600px;
   border: #FFFAFA 1px solid;
   border-radius: 20px;
@@ -15,7 +19,7 @@
   background-color: transparent;
   font-size: calc(10px + 2vmin);
   color: white;
-  padding: 20px;
+  padding-top: 20px;
   transition: all .3s;
 }
 
