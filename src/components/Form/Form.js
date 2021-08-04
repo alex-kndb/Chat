@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     },
     input: {
         width: '100%',
-    }
+    },
 });
 
 export const Form = ({ onSendMessage }) => {
