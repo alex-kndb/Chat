@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
-import { List, ListItem, IconButton, ListItemSecondaryAction, ListItemText, Typography } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { List, ListItem, ListItemText } from '@material-ui/core';
+import './ChatList.css';
 
 const useStyles = makeStyles({
     root: {
@@ -28,23 +28,17 @@ const useStyles = makeStyles({
     },
 });
 
-export const ChatList = ({ chats }) => {
+export const ChatList = ({ chats, removeChat }) => {
 
     const classes = useStyles();
 
     return (
         <List classes={{ root: classes.root }} disablePadding={true}>
             {Object.values(chats).map((chat) => (
-                <Link key={chat.id} to={`/home/${chat.id}`}>
+                <Link className="link" key={chat.id} to={`/home/${chat.id}`}>
                     <ListItem className={classes.li} divider={true}>
-                        <ListItemText disableTypography={true}>
-                            <Typography className={classes.text}>{chat.name}</Typography>
-                        </ListItemText>
-                        <ListItemSecondaryAction>
-                            <IconButton edge="end" aria-label="delete">
-                                <DeleteIcon className={classes.del} />
-                            </IconButton>
-                        </ListItemSecondaryAction>
+                        <ListItemText disableTypography={true} classes={{ root: classes.text }}>{chat.name}</ListItemText>
+                        <button className="btn" edge="end" aria-label="delete" onClick={removeChat} id={chat.id}>DEL</button>
                     </ListItem>
                 </Link>
             ))}

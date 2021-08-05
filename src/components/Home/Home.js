@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback, useParams } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import { MessageList } from '../../components/MessageList/MessageList';
 import { Form } from '../../components/Form/Form';
 import { ChatList } from '../../components/ChatList/ChatList';
@@ -23,10 +24,8 @@ const InitChatsState = {
     },
 }
 
-export const Home = (props) => {
-    const { chatId } = props.match.params;
-    // export const Home = () => {
-    // const { chatId } = useParams();
+export const Home = ({ match }) => {
+    const { chatId } = match.params;
 
     const [chats, setChats] = useState(InitChatsState);
     const handleSendMessage = useCallback((newMessage) => {
@@ -40,7 +39,7 @@ export const Home = (props) => {
     }, [chats, chatId]);
 
     const addNewChat = useCallback(() => {
-        setChats((prevChats) => ({
+        setChats(prevChats => ({
             ...prevChats,
             ['chat' + (Object.keys(prevChats).length + 1)]: {
                 id: 'chat' + (Object.keys(prevChats).length + 1),
@@ -48,10 +47,24 @@ export const Home = (props) => {
                 messages: [{ author: 'Robot', text: 'Hi!', id: Date.now() }]
             },
         }));
+    }, []);
+
+    const removeChat = useCallback((e) => {
+        e.preventDefault();
+        let chatId = e.target.id;
+        console.log(chatId);
+        setChats(prevChats => ({
+            [chatId]: {}, ...prevChats
+        }));
+        console.log(chats);
     }, [chats]);
 
+
     useEffect(() => {
-        if (chatId && chats[chatId].messages[chats[chatId].messages.length - 1].author !== 'Robot') {
+        // if (!chats[chatId])
+        //     return <Redirect to="/nochat" />;
+
+        if (chatId && chats[chatId] && chats[chatId].messages[chats[chatId].messages.length - 1].author !== 'Robot') {
             const timeout = setTimeout(() => {
                 const robotMess = {
                     author: 'Robot',
@@ -62,7 +75,11 @@ export const Home = (props) => {
             }, 1000);
             return () => clearTimeout(timeout);
         }
-    }, [chats, chatId]);
+    }, [chats, chatId, handleSendMessage]);
+
+    if (!chats[chatId])
+        return <Redirect to="/nochat" />;
+
 
     return (
         <div className="App">
@@ -76,8 +93,8 @@ export const Home = (props) => {
                     </div>
                 </header>
                 <main className="main">
-                    <ChatList chats={chats} />
-                    {!!chatId &&
+                    <ChatList chats={chats} removeChat={removeChat} />
+                    {!!chatId && !!chats[chatId] &&
                         <div className="chatbox">
                             <MessageList messages={chats[chatId].messages} />
                             <Form onSendMessage={handleSendMessage} />
