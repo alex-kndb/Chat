@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Button, TextField } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
+import { AUTHORS } from '../../const';
 import './Form.css';
 
 const useStyles = makeStyles({
@@ -33,7 +34,7 @@ export const Form = ({ onSendMessage }) => {
         e.preventDefault();
         onSendMessage(
             {
-                author: "User",
+                author: AUTHORS.user,
                 text: value,
                 id: Date.now()
             });
