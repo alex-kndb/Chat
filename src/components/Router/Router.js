@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Link, Switch, Route } from 'react-router-dom';
 import { Home } from '../Home/Home';
 import { NoChat } from '../NoChat/NoChat';
 import { Profile } from '../Profile/Profile';
 import { AUTHORS } from '../../const';
 import './Router.css';
+
 
 export const Router = () => {
 
@@ -26,6 +27,8 @@ export const Router = () => {
         },
     }
 
+    const [chats, setChats] = useState(InitChatsState);
+
     return (
         <BrowserRouter>
             <div className="nav__wrapper">
@@ -40,10 +43,10 @@ export const Router = () => {
                     <Profile />
                 </Route>
                 <Route path='/nochat'>
-                    <NoChat chats={InitChatsState} />
+                    <NoChat chats={chats} />
                 </Route>
                 <Route path='/home/:chatId?'>
-                    <Home />
+                    <Home chats={chats} setChats={setChats} />
                 </Route>
                 <Route path='*' render={() => <h2 className="page error">Error 404: Page Not Found</h2>}></Route>
             </Switch>

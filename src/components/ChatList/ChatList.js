@@ -29,7 +29,7 @@ export const ChatList = ({ chats, removeChat }) => {
     const classes = useStyles();
 
     return (
-        <List component="nav" classes={{ root: classes.root }} disablePadding={true}>
+        <List classes={{ root: classes.root }} disablePadding={true}>
             {Object.values(chats).map((chat) => (
                 <Link
                     className="link"

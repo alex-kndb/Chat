@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { MessageList } from '../../components/MessageList/MessageList';
 import { Form } from '../../components/Form/Form';
@@ -7,28 +7,9 @@ import ChatIcon from '@material-ui/icons/Chat';
 import { AUTHORS } from '../../const';
 import './Home.css';
 
-const InitChatsState = {
-    chat1: {
-        id: 'chat1',
-        name: 'Chat 1',
-        messages: [{ author: 'Robot', text: `hello! Welcome to this chat!`, id: 'chat1-1' }]
-    },
-    chat2: {
-        id: 'chat2',
-        name: 'Chat 2',
-        messages: [{ author: 'Robot', text: 'hello! Welcome to this chat!', id: 'chat2-1' }]
-    },
-    chat3: {
-        id: 'chat3',
-        name: 'Chat 3',
-        messages: [{ author: 'Robot', text: 'hello! Welcome to this chat!', id: 'chat3-1' }]
-    },
-}
-
-export const Home = () => {
+export const Home = ({ chats, setChats }) => {
     const { chatId } = useParams();
 
-    const [chats, setChats] = useState(InitChatsState);
     const handleSendMessage = useCallback((newMessage) => {
         setChats({
             ...chats,
@@ -37,7 +18,7 @@ export const Home = () => {
                 messages: [...chats[chatId].messages, newMessage]
             },
         });
-    }, [chats, chatId]);
+    }, [chats, chatId, setChats]);
 
     const addNewChat = useCallback(() => {
         setChats(prevChats => ({
@@ -48,7 +29,7 @@ export const Home = () => {
                 messages: [{ author: AUTHORS.bot, text: 'Hi!', id: Date.now() }]
             },
         }));
-    }, []);
+    }, [setChats]);
 
     const removeChat = useCallback((e) => {
         e.preventDefault();
@@ -57,8 +38,7 @@ export const Home = () => {
         setChats(prevChats => ({
             [chatId]: {}, ...prevChats
         }));
-        console.log(chats);
-    }, [chats]);
+    }, [setChats]);
 
 
     useEffect(() => {
@@ -75,7 +55,7 @@ export const Home = () => {
         }
     }, [chats, chatId, handleSendMessage]);
 
-    if (!chats[chatId])
+    if (!chatId || !chats[chatId])
         return <Redirect to="/nochat" />;
 
 
@@ -91,7 +71,7 @@ export const Home = () => {
                     </div>
                 </header>
                 <main className="main">
-                    <ChatList chats={chats} removeChat={removeChat} />
+                    <ChatList chats={chats} chatId={chatId} removeChat={removeChat} />
                     {!!chatId && !!chats[chatId] &&
                         <div className="chatbox">
                             <MessageList messages={chats[chatId].messages} />
