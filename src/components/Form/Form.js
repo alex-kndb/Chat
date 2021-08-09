@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Button, TextField } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
-import './Form.css'
+import './Form.css';
 
 const useStyles = makeStyles({
     btn: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     },
     input: {
         width: '100%',
-    }
+    },
 });
 
 export const Form = ({ onSendMessage }) => {
@@ -37,6 +37,7 @@ export const Form = ({ onSendMessage }) => {
                 text: value,
                 id: Date.now()
             });
+        inputRef.current?.focus();
         setValue('');
     };
 
@@ -54,7 +55,6 @@ export const Form = ({ onSendMessage }) => {
             onSubmit={handleSubmit}
             autoComplete="off">
             <TextField
-                // autoFocus={true}
                 classes={{ root: classes.input }}
                 type="text"
                 value={value}

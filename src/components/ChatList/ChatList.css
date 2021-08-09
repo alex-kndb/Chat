@@ -1,0 +1,19 @@
+.link{
+    list-style: none;
+}
+
+.btn{
+    list-style: none;
+    color: cornflowerblue;
+    font-weight:500;
+    border: none;
+    transition: all .3s;
+    padding: 5px;
+    border-radius: 3px;
+    background-color: #fff;
+}
+
+.btn:hover{
+    color: #fff;
+    background-color: cornflowerblue;
+}
