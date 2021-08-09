@@ -1,9 +1,10 @@
 import React, { useEffect, useCallback, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 import { MessageList } from '../../components/MessageList/MessageList';
 import { Form } from '../../components/Form/Form';
 import { ChatList } from '../../components/ChatList/ChatList';
 import ChatIcon from '@material-ui/icons/Chat';
+import { AUTHORS } from '../../const';
 import './Home.css';
 
 const InitChatsState = {
@@ -24,8 +25,8 @@ const InitChatsState = {
     },
 }
 
-export const Home = ({ match }) => {
-    const { chatId } = match.params;
+export const Home = () => {
+    const { chatId } = useParams();
 
     const [chats, setChats] = useState(InitChatsState);
     const handleSendMessage = useCallback((newMessage) => {
@@ -44,7 +45,7 @@ export const Home = ({ match }) => {
             ['chat' + (Object.keys(prevChats).length + 1)]: {
                 id: 'chat' + (Object.keys(prevChats).length + 1),
                 name: 'Chat ' + (Object.keys(prevChats).length + 1),
-                messages: [{ author: 'Robot', text: 'Hi!', id: Date.now() }]
+                messages: [{ author: AUTHORS.bot, text: 'Hi!', id: Date.now() }]
             },
         }));
     }, []);
@@ -61,13 +62,10 @@ export const Home = ({ match }) => {
 
 
     useEffect(() => {
-        // if (!chats[chatId])
-        //     return <Redirect to="/nochat" />;
-
-        if (chatId && chats[chatId] && chats[chatId].messages[chats[chatId].messages.length - 1].author !== 'Robot') {
+        if (chatId && chats[chatId] && chats[chatId].messages[chats[chatId].messages.length - 1].author !== AUTHORS.bot) {
             const timeout = setTimeout(() => {
                 const robotMess = {
-                    author: 'Robot',
+                    author: AUTHORS.bot,
                     text: 'hello',
                     id: Date.now()
                 };

@@ -3,9 +3,9 @@ import './Message.css'
 
 export const Message = ({ mess }) => {
     return (
-        <div className="message">
+        <div className={`message ${mess.author}`} >
             <p className="message__author">{mess.author}:</p>
             <p className="message__text">{mess.text}</p>
-        </div>
+        </div >
     )
 };

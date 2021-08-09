@@ -1,5 +1,15 @@
-.messageBox{
+.messageBox {
     height: 474px;
     overflow: auto;
+    font-size: 20px;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
+.Robot {
+    text-align: left;
+}
+
+.Me {
+    text-align: right;
+}

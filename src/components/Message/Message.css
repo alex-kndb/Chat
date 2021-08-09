@@ -5,13 +5,14 @@
 
 .message__author{
     margin-bottom: 5px;
-    color:darkblue;
+    color: cornflowerblue;
     text-transform: uppercase;
     font-weight: 700;
 }
 
 .message__text{
     text-transform: capitalize;
-    color: crimson
+    color: cornflowerblue;
+    font-style: italic;
 }
 
