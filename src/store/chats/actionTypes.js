@@ -1,0 +1,2 @@
+export const CHATS_ADD_CHAT = "CHATS::ADD_CHAT";
+export const CHATS_DELETE_CHAT = "CHATS::DELETE_CHAT";
