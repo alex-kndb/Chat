@@ -1,84 +1,68 @@
 import React, { useEffect, useCallback } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { MessageList } from '../../components/MessageList/MessageList';
 import { Form } from '../../components/Form/Form';
 import { ChatList } from '../../components/ChatList/ChatList';
-import ChatIcon from '@material-ui/icons/Chat';
-import { AUTHORS } from '../../const';
-import './Home.css';
 
-export const Home = ({ chats, setChats }) => {
+import { AUTHORS } from '../../const';
+import { addMessage } from '../../store/messages/actions';
+import './Home.css';
+import FormDialog from '../FormDialog/FormDialog';
+
+export const Home = () => {
+
     const { chatId } = useParams();
+    const chats = useSelector(state => state.chats.chatList);
+    const messages = useSelector(state => state.messages.messageList);
+    // console.log('messages-------', messages[chatId]);
+
+    const dispatch = useDispatch();
 
     const handleSendMessage = useCallback((newMessage) => {
-        setChats({
-            ...chats,
-            [chatId]: {
-                ...chats[chatId],
-                messages: [...chats[chatId].messages, newMessage]
-            },
-        });
-    }, [chats, chatId, setChats]);
-
-    const addNewChat = useCallback(() => {
-        setChats(prevChats => ({
-            ...prevChats,
-            ['chat' + (Object.keys(prevChats).length + 1)]: {
-                id: 'chat' + (Object.keys(prevChats).length + 1),
-                name: 'Chat ' + (Object.keys(prevChats).length + 1),
-                messages: [{ author: AUTHORS.bot, text: 'Hi!', id: Date.now() }]
-            },
-        }));
-    }, [setChats]);
-
-    const removeChat = useCallback((e) => {
-        e.preventDefault();
-        let chatId = e.target.id;
-        console.log(chatId);
-        setChats(prevChats => ({
-            [chatId]: {}, ...prevChats
-        }));
-    }, [setChats]);
-
+        dispatch(addMessage(chatId, newMessage));
+    }, [dispatch, chatId]);
 
     useEffect(() => {
-        if (chatId && chats[chatId] && chats[chatId].messages[chats[chatId].messages.length - 1].author !== AUTHORS.bot) {
-            const timeout = setTimeout(() => {
-                const robotMess = {
-                    author: AUTHORS.bot,
-                    text: 'hello',
-                    id: Date.now()
-                };
+        if (chatId) {
+            const robotMess = {
+                author: AUTHORS.bot,
+                text: 'hello',
+                id: `${chatId}-${Date.now()}`
+            };
+            if (!messages[chatId]) {
                 handleSendMessage(robotMess);
-            }, 1000);
-            return () => clearTimeout(timeout);
+            }
+            else if (messages[chatId][messages[chatId]?.length - 1].author !== AUTHORS.bot) {
+                const timeout = setTimeout(() => {
+                    handleSendMessage(robotMess);
+                }, 1000);
+                return () => clearTimeout(timeout);
+            }
         }
-    }, [chats, chatId, handleSendMessage]);
+    }, [chats, chatId, messages, handleSendMessage]);
 
-    if (!chatId || !chats[chatId])
+    if (!chatId)
         return <Redirect to="/nochat" />;
-
 
     return (
         <div className="App">
             <div className="App-content">
                 <header className="App-header">
                     <div className="App-header__wrapper">
-                        <button className="App-header__menu" onClick={addNewChat}>
-                            <ChatIcon></ChatIcon>
-                        </button>
+                        <FormDialog />
                         <h3 className="App-header__title">Chats</h3>
                     </div>
                 </header>
                 <main className="main">
-                    <ChatList chats={chats} chatId={chatId} removeChat={removeChat} />
-                    {!!chatId && !!chats[chatId] &&
+                    <ChatList />
+                    {!!chatId &&
                         <div className="chatbox">
-                            <MessageList messages={chats[chatId].messages} />
+                            <MessageList chatId={chatId} />
                             <Form onSendMessage={handleSendMessage} />
                         </div>}
                 </main>
             </div>
-        </div>
+        </div >
     );
 }

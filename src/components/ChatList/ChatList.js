@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import './ChatList.css';
+import { deleteChat } from '../../store/chats/actions';
+import { deleteMessages } from '../../store/messages/actions';
 
 const useStyles = makeStyles({
     root: {
@@ -24,13 +27,22 @@ const useStyles = makeStyles({
     },
 });
 
-export const ChatList = ({ chats, removeChat }) => {
+export const ChatList = ({ chatId }) => {
+    const chats = useSelector(state => state.chats.chatList);
+    const dispatch = useDispatch();
+
+    const removeChat = useCallback((e) => {
+        let btnId = e.target.id;
+        // console.log('button id --------', btnId);
+        dispatch(deleteChat(btnId));
+        dispatch(deleteMessages(btnId));
+    }, [dispatch]);
 
     const classes = useStyles();
 
     return (
         <List classes={{ root: classes.root }} disablePadding={true}>
-            {Object.values(chats).map((chat) => (
+            {chats.map((chat) => (
                 <Link
                     className="link"
                     key={chat.id}

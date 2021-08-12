@@ -17,7 +17,13 @@
     margin-bottom: 50px;
 }
 
+.profile__form{
+    width: 600px;
+    margin: 0 auto;
+}
+
 .profile__btn{
+    margin-left: 15px;
     padding: 20px;
     transition: all .3s;
     border: none;

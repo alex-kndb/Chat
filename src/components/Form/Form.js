@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
 import { Button, TextField } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
-import { AUTHORS } from '../../const';
 import './Form.css';
 
 const useStyles = makeStyles({
@@ -30,14 +30,17 @@ export const Form = ({ onSendMessage }) => {
         setValue(e.target.value);
     };
 
+    const { name } = useSelector(state => state.profile);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         onSendMessage(
             {
-                author: AUTHORS.user,
+                author: name,
                 text: value,
                 id: Date.now()
             });
+        // onSendMessage(value);
         inputRef.current?.focus();
         setValue('');
     };
