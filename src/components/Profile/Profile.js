@@ -39,7 +39,7 @@ export const Profile = () => {
         dispatch(changeName(value));
         inputRef.current?.focus();
         resetValue();
-    }, [dispatch, value]);
+    }, [dispatch, value, resetValue]);
 
     const inputRef = useRef();
     useEffect(() => {

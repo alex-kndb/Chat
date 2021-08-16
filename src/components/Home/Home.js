@@ -30,28 +30,6 @@ export const Home = () => {
 
     const findChat = useCallback(() => chats.filter(el => el.id === chatId), [chats, chatId]);
 
-    // useEffect(() => {
-    //     //     const robotMess = {
-    //     //         author: AUTHORS.bot,
-    //     //         text: 'hello',
-    //     //         id: `${chatId}-${Date.now()}`
-    //     //     };
-
-    //     // if (!!chatId && !!findChat(chatId).length && !!messages[chatId] && messages[chatId][messages[chatId]?.length - 1]?.author !== AUTHORS.bot) {
-    //     //         const timeout = setTimeout(() => {
-    //     //             handleSendMessage(robotMess);
-    //     //         }, 1000);
-    //     //         return () => clearTimeout(timeout);
-    //     //     }
-    //     // }, [chatId, chats, messages, handleSendMessage, findChat]);
-
-    //     const onAddMessage = useCallback((message) => {
-    //         dispatch(addMessageWithThunk(chatId, message))
-    //     }, [dispatch, chatId]);
-    // }, [chatId, chats, messages, handleSendMessage, findChat]);
-
-
-
     if (chatId && !findChat(chatId).length) {
         history.replace('/nochat');
     };
