@@ -9,19 +9,19 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ChatIcon from '@material-ui/icons/Chat';
 import { addChat } from '../../store/chats/actions';
+import { useInput } from '../../utils/useInput';
 
 export default function FormDialog() {
     const [open, setOpen] = useState(false);
     const handleClickOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
-    const [newChatName, setNewChatName] = useState('');
     const dispatch = useDispatch();
 
-    const handleChange = (e) => setNewChatName(e.target.value);
+    const { value, handleChange, resetValue } = useInput('');
+
     const onAddNewChat = () => {
-        dispatch(addChat(newChatName));
-        setNewChatName("");
+        dispatch(addChat(value));
+        resetValue();
         handleClose();
     }
 
@@ -38,7 +38,7 @@ export default function FormDialog() {
                     </DialogContentText>
                     <TextField
                         onChange={handleChange}
-                        value={newChatName}
+                        value={value}
                         autoFocus
                         margin="dense"
                         id="name"

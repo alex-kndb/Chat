@@ -1,9 +1,11 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback, useRef, useEffect } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { changeName, toggleName } from '../../store/profile/actions';
+import { getProfileState } from '../../store/selectors';
 import { makeStyles } from '@material-ui/core/styles';
 import { Input } from '@material-ui/core';
-import { changeName, toggleName } from '../../store/profile/actions';
-import './Profile.css'
+import { useInput } from '../../utils/useInput';
+import './Profile.css';
 
 const useStyle = makeStyles({
     input: {
@@ -23,23 +25,20 @@ const useStyle = makeStyles({
 });
 
 export const Profile = () => {
-    const profileState = useSelector(state => state.profile);
+    const profileState = useSelector(getProfileState, shallowEqual);
     const dispatch = useDispatch();
 
     const toggleShow = useCallback(() => {
         dispatch(toggleName());
     }, [dispatch]);
 
-    const [value, setValue] = useState('');
-    const handleChange = useCallback((e) => {
-        setValue(e.target.value);
-    }, []);
+    const { value, handleChange, resetValue } = useInput('');
 
     const setName = useCallback((e) => {
         e.preventDefault();
         dispatch(changeName(value));
         inputRef.current?.focus();
-        // setValue('');
+        resetValue();
     }, [dispatch, value]);
 
     const inputRef = useRef();
@@ -56,7 +55,7 @@ export const Profile = () => {
                 <form className="profile__form" onSubmit={setName} noValidate autoComplete="off">
                     <Input inputRef={inputRef} className={classes.input} onChange={handleChange} value={value} placeholder="Name" />
                     <button type="submit" className="profile__btn">Change</button>
-                    <button className="profile__btn" onClick={toggleShow}>SHOW</button>
+                    <button type="button" className="profile__btn" onClick={toggleShow}>SHOW</button>
                 </form>
                 {profileState.showName && <h3 className="profile__info">Master of the profile is {profileState.name}</h3>}
             </div>

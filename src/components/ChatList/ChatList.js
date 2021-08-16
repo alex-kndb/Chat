@@ -1,12 +1,9 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import './ChatList.css';
-import { deleteChat } from '../../store/chats/actions';
-import { deleteMessages } from '../../store/messages/actions';
 
 const useStyles = makeStyles({
     root: {
@@ -16,28 +13,20 @@ const useStyles = makeStyles({
     },
     li: {
         '&:hover': {
-            backgroundColor: 'white',
+            backgroundColor: 'whitesmoke',
+
         },
     },
     text: {
         color: 'cornflowerblue',
-        fontSize: 16,
-        fontWeight: 500,
         textTransform: 'uppercase',
+    },
+    select: {
+        color: 'white',
     },
 });
 
-export const ChatList = ({ chatId }) => {
-    const chats = useSelector(state => state.chats.chatList);
-    const dispatch = useDispatch();
-
-    const removeChat = useCallback((e) => {
-        let btnId = e.target.id;
-        // console.log('button id --------', btnId);
-        dispatch(deleteChat(btnId));
-        dispatch(deleteMessages(btnId));
-    }, [dispatch]);
-
+export const ChatList = ({ chats, chatId, removeChat }) => {
     const classes = useStyles();
 
     return (
@@ -48,6 +37,8 @@ export const ChatList = ({ chatId }) => {
                     key={chat.id}
                     to={`/home/${chat.id}`}>
                     <ListItem
+                        selected={chat.id === chatId ? true : false}
+                        classes={{ selected: classes.select }}
                         className={classes.li}
                         divider={true}>
                         <ListItemText
@@ -58,7 +49,7 @@ export const ChatList = ({ chatId }) => {
                             className="btn"
                             edge="end"
                             aria-label="delete"
-                            onClick={removeChat}
+                            onClick={() => removeChat(chat.id)}
                             id={chat.id}>
                             <DeleteIcon />
                         </button>

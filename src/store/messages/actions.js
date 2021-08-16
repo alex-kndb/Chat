@@ -8,5 +8,5 @@ export const addMessage = (chatId, newMessage) => ({
 
 export const deleteMessages = (chatId) => ({
     type: MESSAGES_DELETE_MESSAGES,
-    chatId,
+    payload: chatId,
 });

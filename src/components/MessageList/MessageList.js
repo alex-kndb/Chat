@@ -1,10 +1,8 @@
 import React, { useCallback } from 'react';
-import { useSelector } from 'react-redux';
 import './MessageList.css';
 import { Message } from '../Message/Message';
 
-export const MessageList = ({ chatId }) => {
-    const messages = useSelector(state => state.messages.messageList);
+export const MessageList = ({ chatId, messages }) => {
 
     const renderMessage = useCallback((mess, i) => (
         <Message mess={mess} key={i} />
