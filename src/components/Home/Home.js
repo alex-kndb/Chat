@@ -1,15 +1,14 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { MessageList } from '../../components/MessageList/MessageList';
 import { Form } from '../../components/Form/Form';
 import { ChatList } from '../../components/ChatList/ChatList';
-import { AUTHORS } from '../../const';
-import { addMessage } from '../../store/messages/actions';
 import FormDialog from '../FormDialog/FormDialog';
 import { getChats, getMessages } from '../../store/selectors';
 import { deleteChat } from '../../store/chats/actions';
 import { deleteMessages } from '../../store/messages/actions';
+import { addMessageWithThunk } from '../../store/messages/actions';
 import './Home.css';
 
 export const Home = () => {
@@ -20,8 +19,8 @@ export const Home = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const handleSendMessage = useCallback((newMessage) => {
-        dispatch(addMessage(chatId, newMessage));
+    const handleSendMessage = useCallback((message) => {
+        dispatch(addMessageWithThunk(chatId, message));
     }, [dispatch, chatId]);
 
     const removeChat = useCallback((id) => {
@@ -30,25 +29,6 @@ export const Home = () => {
     }, [dispatch]);
 
     const findChat = useCallback(() => chats.filter(el => el.id === chatId), [chats, chatId]);
-
-    useEffect(() => {
-        const robotMess = {
-            author: AUTHORS.bot,
-            text: 'hello',
-            id: `${chatId}-${Date.now()}`
-        };
-        if (chatId && !!findChat(chatId).length) {
-            if (!messages[chatId]) {
-                handleSendMessage(robotMess);
-            }
-            else if (messages[chatId][messages[chatId]?.length - 1]?.author !== AUTHORS.bot) {
-                const timeout = setTimeout(() => {
-                    handleSendMessage(robotMess);
-                }, 1000);
-                return () => clearTimeout(timeout);
-            }
-        }
-    }, [chatId, chats, messages, handleSendMessage, findChat]);
 
     if (chatId && !findChat(chatId).length) {
         history.replace('/nochat');
