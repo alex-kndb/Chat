@@ -35,7 +35,7 @@ export const Home = () => {
     };
 
     return (
-        <div className="App">
+        <div className="main-wrapper">
             <div className="App-content">
                 <header className="App-header">
                     <div className="App-header__wrapper">
