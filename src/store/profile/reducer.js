@@ -1,4 +1,4 @@
-import { PROFILE_TOGGLE_SHOW } from './actions';
+import { PROFILE_CHANGE_NAME, PROFILE_TOGGLE_SHOW } from './actionsTypes';
 
 const initState = {
     name: 'Alex',
@@ -12,9 +12,13 @@ export const profileReducer = (state = initState, action) => {
                 ...state,
                 showName: !state.showName,
             };
+        case PROFILE_CHANGE_NAME:
+            return {
+                ...state,
+                name: action.payload,
+            };
         default:
             return state;
     }
-
 
 }

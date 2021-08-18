@@ -1,5 +1,7 @@
 .link{
     list-style: none;
+    text-decoration: none;
+    transition: all .3s;
 }
 
 .btn{
@@ -10,7 +12,7 @@
     transition: all .3s;
     padding: 5px;
     border-radius: 3px;
-    background-color: #fff;
+    background-color: transparent;
 }
 
 .btn:hover{

@@ -1,8 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { shallowEqual, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
 import { Button, TextField } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
-import { AUTHORS } from '../../const';
+import { getProfileState } from '../../store/selectors';
+import { useInput } from '../../utils/useInput';
 import './Form.css';
 
 const useStyles = makeStyles({
@@ -24,22 +26,18 @@ const useStyles = makeStyles({
 
 export const Form = ({ onSendMessage }) => {
 
-    const [value, setValue] = useState('');
-
-    const handleChange = (e) => {
-        setValue(e.target.value);
-    };
+    const { name } = useSelector(getProfileState, shallowEqual);
+    const { value, handleChange, resetValue } = useInput('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSendMessage(
-            {
-                author: AUTHORS.user,
-                text: value,
-                id: Date.now()
-            });
+        onSendMessage({
+            author: name,
+            text: value,
+            id: Date.now()
+        });
         inputRef.current?.focus();
-        setValue('');
+        resetValue();
     };
 
     const inputRef = useRef();

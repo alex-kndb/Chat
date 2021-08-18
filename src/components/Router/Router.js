@@ -3,28 +3,9 @@ import { BrowserRouter, Link, Switch, Route } from 'react-router-dom';
 import { Home } from '../Home/Home';
 import { NoChat } from '../NoChat/NoChat';
 import { Profile } from '../Profile/Profile';
-import { AUTHORS } from '../../const';
 import './Router.css';
 
 export const Router = () => {
-
-    const InitChatsState = {
-        chat1: {
-            id: 'chat1',
-            name: 'Chat 1',
-            messages: [{ author: AUTHORS.bot, text: `hello! Welcome to this chat!`, id: 'chat1-1' }]
-        },
-        chat2: {
-            id: 'chat2',
-            name: 'Chat 2',
-            messages: [{ author: AUTHORS.bot, text: 'hello! Welcome to this chat!', id: 'chat2-1' }]
-        },
-        chat3: {
-            id: 'chat3',
-            name: 'Chat 3',
-            messages: [{ author: AUTHORS.bot, text: 'hello! Welcome to this chat!', id: 'chat3-1' }]
-        },
-    }
 
     return (
         <BrowserRouter>
@@ -40,7 +21,7 @@ export const Router = () => {
                     <Profile />
                 </Route>
                 <Route path='/nochat'>
-                    <NoChat chats={InitChatsState} />
+                    <NoChat />
                 </Route>
                 <Route path='/home/:chatId?'>
                     <Home />
