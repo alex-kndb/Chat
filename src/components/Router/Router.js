@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Link, Switch, Route } from 'react-router-dom';
+import { GistsList } from '../GistsList/GistsList';
 import { Home } from '../Home/Home';
-import { Megavangelicals } from '../Megavangelicals/Megavangelicals';
 import { NoChat } from '../NoChat/NoChat';
 import { Profile } from '../Profile/Profile';
 import './Router.css';
@@ -14,7 +14,7 @@ export const Router = () => {
                 <ul className="nav nav__container">
                     <li className="nav__item"><Link to='/home/'>Home</Link></li>
                     <li className="nav__item"><Link to='/profile'>Profile</Link></li>
-                    <li className="nav__item"><Link to='/megavangelicals'>Megavangelicals</Link></li>
+                    <li className="nav__item"><Link to='/gistslist'>GistsList</Link></li>
                 </ul>
             </div>
             <Switch>
@@ -25,8 +25,8 @@ export const Router = () => {
                 <Route path='/nochat'>
                     <NoChat />
                 </Route>
-                <Route path='/megavangelicals'>
-                    <Megavangelicals />
+                <Route path='/gistslist'>
+                    <GistsList />
                 </Route>
                 <Route path='/home/:chatId?'>
                     <Home />

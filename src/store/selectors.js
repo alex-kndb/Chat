@@ -1,11 +1,3 @@
-export const getChats = (state) => {
-    return state.chats.chatList
-};
-
-export const getMessages = (state) => {
-    return state.messages.messageList
-};
-
-export const getProfileState = (state) => {
-    return state.profile
-};
+export const getChats = (state) => state.chats.chatList;
+export const getMessages = (state) => state.messages.messageList;
+export const getProfileState = (state) => state.profile;

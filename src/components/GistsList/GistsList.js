@@ -1,33 +1,19 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { List, ListItem, ListItemText, CircularProgress } from "@material-ui/core";
-import { API_URL } from '../../const';
-import './Megavangelicals.css';
+import { useDispatch, useSelector } from "react-redux";
+import { selectArticles, selectArticlesError, selectArticlesLoading } from "../../store/gistslist/selectors";
+import { getArticlesWithThunk } from "../../store/gistslist/actions";
+import './GistsList.css';
 
-export const Megavangelicals = () => {
+export const GistsList = () => {
 
-    const [articles, setArticles] = useState([]);
-    const [loadind, setLoading] = useState(false);
-    const [error, setError] = useState(false);
+    const dispatch = useDispatch();
+    const loading = useSelector(selectArticlesLoading);
+    const error = useSelector(selectArticlesError);
+    const articles = useSelector(selectArticles);
 
     const getApiData = () => {
-        setError(false);
-        setLoading(true);
-        fetch(API_URL)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`Request failed with status: ${response.status}`)
-                };
-                return response.json();
-            })
-            .then((result) => {
-                setArticles(result.data);
-
-            })
-            .catch((error) => {
-                console.log(error);
-                setError(true);
-            })
-            .finally(() => setLoading(false));
+        dispatch(getArticlesWithThunk());
     };
 
     useEffect(() => {
@@ -42,7 +28,7 @@ export const Megavangelicals = () => {
         </ListItem>
     ), []);
 
-    if (loadind) {
+    if (loading) {
         return (
             <div className="main-wrapper">
                 <div className="apiData__container">
