@@ -3,6 +3,7 @@ import firebase from "firebase";
 var firebaseConfig = {
     apiKey: "AIzaSyAw2j0M6xfPIPVw48gyAtbvt8cqWG4XUc4",
     authDomain: "gb-react-project.firebaseapp.com",
+    databaseURL: "https://gb-react-project-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "gb-react-project",
     storageBucket: "gb-react-project.appspot.com",
     messagingSenderId: "255356038660",
