@@ -24,7 +24,7 @@ export const Router = () => {
                 setAuthed(false);
             }
         })
-    }, []);
+    }, [authed]);
 
     return (
         <BrowserRouter>

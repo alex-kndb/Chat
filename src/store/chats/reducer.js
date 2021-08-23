@@ -1,4 +1,4 @@
-import { CHATS_ADD_CHAT, CHATS_DELETE_CHAT } from "./actionTypes";
+import { ADD_CHAT, DELETE_CHAT } from "./actionTypes";
 
 const initChatState = {
     chatList: [
@@ -11,18 +11,12 @@ const initChatState = {
 
 export const chatReducer = (state = initChatState, action) => {
     switch (action.type) {
-        case CHATS_ADD_CHAT:
+        case ADD_CHAT:
             return {
                 ...state,
-                chatList: [
-                    ...state.chatList,
-                    {
-                        id: `chat${state.chatList.length + 1}`,
-                        name: action.chatName,
-                    },
-                ],
+                chatList: action.payload,
             };
-        case CHATS_DELETE_CHAT: {
+        case DELETE_CHAT: {
             const chats = state.chatList;
             return {
                 ...state,

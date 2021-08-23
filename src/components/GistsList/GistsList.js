@@ -12,13 +12,13 @@ export const GistsList = () => {
     const error = useSelector(selectArticlesError);
     const articles = useSelector(selectArticles);
 
-    const getApiData = () => {
+    const getApiData = useCallback(() => {
         dispatch(getArticlesWithThunk());
-    };
+    }, [dispatch]);
 
     useEffect(() => {
         getApiData();
-    }, []);
+    }, [getApiData]);
 
     const renderApiData = useCallback((article) => (
         <ListItem divider key={article.id} style={{ backgroundColor: article.attributes.color }}>

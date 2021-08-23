@@ -8,23 +8,22 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ChatIcon from '@material-ui/icons/Chat';
-import { addChat } from '../../store/chats/actions';
 import { useInput } from '../../utils/useInput';
+import { addNewChatWithFirebase } from '../../store/chats/actions';
 
-export default function FormDialog() {
+export default function FormDialog({ chats }) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
     const dispatch = useDispatch();
-
     const { value, handleChange, resetValue } = useInput('');
 
+    // добавление чатов (РАБОТАЕТ)
     const onAddNewChat = () => {
-        dispatch(addChat(value));
+        dispatch(addNewChatWithFirebase(value, chats));
         resetValue();
         handleClose();
-    }
+    };
 
     return (
         <div>
