@@ -7,17 +7,20 @@ const initMessageState = {
 export const messageReducer = (state = initMessageState, action) => {
     switch (action.type) {
         case MESSAGES_ADD_MESSAGE: {
-            const currentList = state.messageList[action.payload.chatId] || [];
+            // const currentList = state.messageList[action.payload.chatId] || [];
             return {
                 ...state,
                 messageList: {
                     ...state.messageList,
-                    [action.payload.chatId]: [
-                        ...currentList, {
-                            ...action.payload.message,
-                            id: `${action.payload.chatId}-${Date.now()}`,
-                        }
-                    ],
+                    // [action.payload.chatId]: [
+                    //     ...currentList, {
+                    //         ...action.payload.message,
+                    //         id: `${action.payload.chatId}-${Date.now()}`,
+
+                    [action.payload.chatId]: action.payload.messages,
+
+                    //     }
+                    // ],
                 },
             };
         };

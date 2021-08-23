@@ -54,10 +54,12 @@ export const GistsList = () => {
     return (
         <div className="main-wrapper">
             <div className="apiData__container">
-                <h2 className="apiData__title">Megavangelicals</h2>
-                <List className="articles">
-                    {articles.map(renderApiData)}
-                </List >
+                <div className="apiData__wrapper">
+                    <h2 className="apiData__title">Megavangelicals</h2>
+                    <List className="articles">
+                        {articles.map(renderApiData)}
+                    </List >
+                </div>
             </div>
         </div>
     )

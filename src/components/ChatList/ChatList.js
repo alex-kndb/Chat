@@ -35,7 +35,7 @@ export const ChatList = ({ chats, chatId, removeChat }) => {
                 <Link
                     className="link"
                     key={chat.id}
-                    to={`/home/${chat.id}`}>
+                    to={`/home/chats/${chat.id}`}>
                     <ListItem
                         selected={chat.id === chatId ? true : false}
                         classes={{ selected: classes.select }}

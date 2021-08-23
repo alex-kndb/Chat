@@ -13,8 +13,9 @@ import { useInput } from '../../utils/useInput';
 
 export default function FormDialog() {
     const [open, setOpen] = useState(false);
-    const handleClickOpen = () => setOpen(true);
+    const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
     const dispatch = useDispatch();
 
     const { value, handleChange, resetValue } = useInput('');
@@ -27,7 +28,7 @@ export default function FormDialog() {
 
     return (
         <div>
-            <Button variant="outlined" color="primary" onClick={handleClickOpen} className="App-header__menu">
+            <Button variant="outlined" color="primary" onClick={handleOpen} className="App-header__menu">
                 <ChatIcon></ChatIcon>
             </Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">

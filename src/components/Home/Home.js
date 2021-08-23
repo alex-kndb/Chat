@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { SingUp } from '../SingUp/SingUp';
 import './Home.css';
 
 export const Home = () => {
@@ -17,7 +16,6 @@ export const Home = () => {
                     </li>
                 </ul>
             </div>
-            <SingUp />
         </div>
     )
 }
