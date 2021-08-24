@@ -1,4 +1,4 @@
-import { CHANGE_MESSAGES, MESSAGES_DELETE_MESSAGES } from "./actionTypes";
+import { CHANGE_MESSAGES, DELETE_MESSAGES } from "./actionTypes";
 
 const initMessageState = {
     messageList: {},
@@ -15,9 +15,10 @@ export const messageReducer = (state = initMessageState, action) => {
                 },
             };
         };
-        case MESSAGES_DELETE_MESSAGES: {
+        case DELETE_MESSAGES: {
             const newState = { ...state };
-            delete newState.messageList[action.payload];
+            console.log(action.payload.chatId);
+            delete newState.messageList[`${action.payload.chatId}`];
             return newState;
         }
         default:
