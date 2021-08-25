@@ -12,13 +12,13 @@ export const GistsList = () => {
     const error = useSelector(selectArticlesError);
     const articles = useSelector(selectArticles);
 
-    const getApiData = () => {
+    const getApiData = useCallback(() => {
         dispatch(getArticlesWithThunk());
-    };
+    }, [dispatch]);
 
     useEffect(() => {
         getApiData();
-    }, []);
+    }, [getApiData]);
 
     const renderApiData = useCallback((article) => (
         <ListItem divider key={article.id} style={{ backgroundColor: article.attributes.color }}>
@@ -54,10 +54,12 @@ export const GistsList = () => {
     return (
         <div className="main-wrapper">
             <div className="apiData__container">
-                <h2 className="apiData__title">Megavangelicals</h2>
-                <List className="articles">
-                    {articles.map(renderApiData)}
-                </List >
+                <div className="apiData__wrapper">
+                    <h2 className="apiData__title">Megavangelicals</h2>
+                    <List className="articles">
+                        {articles.map(renderApiData)}
+                    </List >
+                </div>
             </div>
         </div>
     )

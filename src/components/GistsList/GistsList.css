@@ -1,6 +1,8 @@
 .apiData__container {
     width: 1140px;
     margin: 0 auto;
+    display: flex;
+    justify-content: center;
 }
 
 .articles {

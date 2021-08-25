@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Link, Switch, Route } from 'react-router-dom';
-import { GistsList } from '../GistsList/GistsList';
 import { Home } from '../Home/Home';
+import { Chats } from '../Chats/Chats';
 import { NoChat } from '../NoChat/NoChat';
 import { Profile } from '../Profile/Profile';
+import { Login } from '../Login/Login';
+import { GistsList } from '../GistsList/GistsList';
+import { PublicRoute } from '../../hocs/PublicRoute';
+import { PrivateRoute } from '../../hocs/PrivateRoute';
+import firebase from 'firebase';
 import './Router.css';
 
 export const Router = () => {
+
+    const [authed, setAuthed] = useState(false);
+
+    useEffect(() => {
+        firebase.auth().onAuthStateChanged((user) => {
+            console.log('authed--------', authed);
+            if (user) {
+                setAuthed(true);
+            } else {
+                setAuthed(false);
+            }
+        })
+    }, [authed]);
 
     return (
         <BrowserRouter>
@@ -18,20 +36,29 @@ export const Router = () => {
                 </ul>
             </div>
             <Switch>
-                <Route path='/' exact render={() => <h2 className="page main-wrapper">Welcome to this app!</h2>}></Route>
-                <Route path='/profile'>
-                    <Profile />
-                </Route>
-                <Route path='/nochat'>
-                    <NoChat />
-                </Route>
-                <Route path='/gistslist'>
-                    <GistsList />
-                </Route>
-                <Route path='/home/:chatId?'>
+                <PublicRoute authed={authed} exact path='/login'>
+                    <Login />
+                </PublicRoute>
+                <PublicRoute authed={authed} exact path='/singup'>
+                    <Login isSignUp />
+                </PublicRoute>
+                <PublicRoute authed={authed} exact path='/home'>
                     <Home />
-                </Route>
-                <Route path='*' render={() => <h2 className="page error main-wrapper">Error 404: Page Not Found</h2>}></Route>
+                </PublicRoute>
+                <PublicRoute authed={authed} path='/gistslist'>
+                    <GistsList />
+                </PublicRoute>
+                <PrivateRoute authed={authed} path='/profile'>
+                    <Profile />
+                </PrivateRoute>
+                <PrivateRoute authed={authed} path='/nochat'>
+                    <NoChat />
+                </PrivateRoute>
+                <PrivateRoute authed={authed} path='/chats/:chatId?'>
+                    <Chats />
+                </PrivateRoute>
+                <Route path='/' exact render={() => <h2 className="page main-wrapper">Welcome to this app!</h2>} />
+                <Route path='*' render={() => <h2 className="page error main-wrapper">Error 404: Page Not Found</h2>} />
             </Switch>
         </BrowserRouter>
     )

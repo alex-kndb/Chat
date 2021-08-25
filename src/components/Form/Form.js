@@ -34,7 +34,6 @@ export const Form = ({ onSendMessage }) => {
         onSendMessage({
             author: name,
             text: value,
-            id: Date.now()
         });
         inputRef.current?.focus();
         resetValue();
