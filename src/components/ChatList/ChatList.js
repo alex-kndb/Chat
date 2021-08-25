@@ -46,7 +46,7 @@ export const ChatList = ({ chats, chatId, removeChat }) => {
                             primary={chat.name}>
                         </ListItemText>
                         <button
-                            className="btn"
+                            className="chatList__btn"
                             edge="end"
                             aria-label="delete"
                             onClick={() => removeChat(chat.id)}

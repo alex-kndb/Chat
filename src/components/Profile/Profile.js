@@ -49,13 +49,13 @@ export const Profile = () => {
     const classes = useStyle();
 
     return (
-        <div className="profile__wrapper">
+        <div className="main-wrapper">
             <div className="profile">
                 <h2 className="profile__header">PROFILE</h2>
                 <form className="profile__form" onSubmit={setName} noValidate autoComplete="off">
                     <Input inputRef={inputRef} className={classes.input} onChange={handleChange} value={value} placeholder="Name" />
-                    <button type="submit" className="profile__btn">Change</button>
-                    <button type="button" className="profile__btn" onClick={toggleShow}>SHOW</button>
+                    <button type="submit" className="profile__btn btn">Change</button>
+                    <button type="button" className="profile__btn btn" onClick={toggleShow}>SHOW</button>
                 </form>
                 {profileState.showName && <h3 className="profile__info">Master of the profile is {profileState.name}</h3>}
             </div>

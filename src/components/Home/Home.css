@@ -1,13 +1,11 @@
-.App {
+.main-wrapper {
   min-height: 90vh;
+  padding-top: 50px;
   background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,121,91,1) 35%, rgba(0,212,255,1) 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 .App-content {
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   height: 600px;
@@ -43,7 +41,7 @@
   transition: all .3s;
 }
 
-.App-header__menu:hover{
+.App-header__menu:hover {
   color: #fff;
   background-color: cornflowerblue;
 }
@@ -59,7 +57,7 @@
   flex-grow: 1;
 }
 
-.chatbox{
+.chatbox {
   width: 490px;
   margin-left: 10px;
 }

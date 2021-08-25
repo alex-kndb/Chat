@@ -4,7 +4,7 @@
     transition: all .3s;
 }
 
-.btn{
+.chatList__btn{
     list-style: none;
     color: cornflowerblue;
     font-weight:500;
@@ -15,7 +15,7 @@
     background-color: transparent;
 }
 
-.btn:hover{
+.chatList__btn:hover{
     color: #fff;
     background-color: cornflowerblue;
 }
