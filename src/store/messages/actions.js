@@ -33,7 +33,6 @@ export const initMessageTracking = () => (dispatch) => {
         .ref('messages')
         .on('child_changed', (snapshot) => {
             const payload = getPayloadFromSnapshot(snapshot);
-            // console.log('----------child changed payload--------', payload);
             dispatch({
                 type: CHANGE_MESSAGES,
                 payload,
@@ -43,7 +42,6 @@ export const initMessageTracking = () => (dispatch) => {
         .ref('messages')
         .on('child_added', (snapshot) => {
             const payload = getPayloadFromSnapshot(snapshot);
-            // console.log('----------child added payload--------', payload);
             dispatch({
                 type: CHANGE_MESSAGES,
                 payload,
