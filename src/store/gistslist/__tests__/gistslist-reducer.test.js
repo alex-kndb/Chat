@@ -11,7 +11,7 @@ describe('reducer tests', () => {
                 error: null,
             },
         };
-        const recieved = articlesReducer([], getArticlesPending());
+        const recieved = articlesReducer(undefined, getArticlesPending());
         expect(recieved).toEqual(expected);
     });
 
@@ -23,7 +23,7 @@ describe('reducer tests', () => {
                 status: REQUEST_STATUS.SUCCESS,
             },
         };
-        const recieved = articlesReducer([], getArticlesSuccess());
+        const recieved = articlesReducer(undefined, getArticlesSuccess([]));
         expect(recieved).toEqual(expected);
     });
 
@@ -36,7 +36,7 @@ describe('reducer tests', () => {
                 error: error,
             },
         };
-        const recieved = articlesReducer([], getArticlesError(error));
+        const recieved = articlesReducer(undefined, getArticlesError(error));
         expect(recieved).toEqual(expected);
     });
 });
