@@ -1,2 +1,0 @@
-import { profileReducer } from "../reducer";
-

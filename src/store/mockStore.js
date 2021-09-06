@@ -12,5 +12,30 @@ const mockState = {
     },
 };
 
+const mockStateError = {
+    ...mockState,
+    articles: {
+        ...mockState.articles,
+        request: {
+            status: REQUEST_STATUS.FAILURE,
+            error: "Error",
+        },
+    },
+};
+
+const mockStateLoading = {
+    ...mockState,
+    articles: {
+        ...mockState.articles,
+        request: {
+            status: REQUEST_STATUS.PENDING,
+            error: null,
+        },
+    },
+};
+
+
 const store = configureStore([thunk]);
 export const mockStore = store(() => mockState);
+export const mockStoreError = store(() => mockStateError);
+export const mockStoreLoading = store(() => mockStateLoading);

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[` matches snapshot with no article 1`] = `
+exports[`articles test matches snapshot with no articles 1`] = `
 Object {
   "asFragment": [Function],
   "baseElement": <body>
