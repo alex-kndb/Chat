@@ -32,7 +32,7 @@ export const GistsList = () => {
         return (
             <div className="main-wrapper">
                 <div className="apiData__container">
-                    <CircularProgress style={{ color: 'white' }} />
+                    <CircularProgress role="loading" style={{ color: 'white' }} />
                 </div>
             </div>
         )

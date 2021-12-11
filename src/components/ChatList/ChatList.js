@@ -50,7 +50,8 @@ export const ChatList = ({ chats, chatId, removeChat }) => {
                             edge="end"
                             aria-label="delete"
                             onClick={() => removeChat(chat.id)}
-                            id={chat.id}>
+                        // id={chat.id}
+                        >
                             <DeleteIcon />
                         </button>
                     </ListItem>

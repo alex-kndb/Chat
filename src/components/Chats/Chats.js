@@ -6,10 +6,8 @@ import { Form } from '../Form/Form';
 import { ChatList } from '../ChatList/ChatList';
 import FormDialog from '../FormDialog/FormDialog';
 import { getChats, getMessages } from '../../store/selectors';
-import { deleteChat, initChatTracking } from '../../store/chats/actions';
-import { deleteMessages } from '../../store/messages/actions';
-import { addNewMessageWithFirebase, initMessageTracking } from '../../store/messages/actions';
-import firebase from 'firebase';
+import { initChatTracking, deleteChatWithFirebase } from '../../store/chats/actions';
+import { addNewMessageWithFirebase, deleteMessagesWithFirebase, initMessageTracking } from '../../store/messages/actions';
 import './Chats.css';
 
 export const Chats = () => {
@@ -17,6 +15,8 @@ export const Chats = () => {
     // получение данных
     const { chatId } = useParams();
     const chats = useSelector(getChats, shallowEqual);
+
+    // console.log('CHATS--------', chats);
     const messages = useSelector(getMessages, shallowEqual);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -33,14 +33,11 @@ export const Chats = () => {
         dispatch(initChatTracking());
     }, [dispatch]);
 
-    // useEffect(() => {
-    //     dispatch(initChatTracking());
-    // }, [dispatch]);
-
-    const removeChat = useCallback((id) => {
-        dispatch(deleteMessages(id));
-        dispatch(deleteChat(id));
-    }, [dispatch]);
+    const removeChat = useCallback((chatId) => {
+        console.log('delete chat-------', chatId);
+        dispatch(deleteChatWithFirebase(chatId));
+        dispatch(deleteMessagesWithFirebase(chatId));
+    }, []);
 
     const findChat = useCallback(() => chats.filter(el => el.id === chatId), [chats, chatId]);
 

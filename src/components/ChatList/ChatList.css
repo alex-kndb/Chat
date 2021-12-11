@@ -18,4 +18,5 @@
 .chatList__btn:hover{
     color: #fff;
     background-color: cornflowerblue;
+    cursor: pointer;
 }

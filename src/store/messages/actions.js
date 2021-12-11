@@ -1,11 +1,6 @@
-import { MESSAGES_DELETE_MESSAGES, CHANGE_MESSAGES } from "./actionTypes";
+import { DELETE_MESSAGES, CHANGE_MESSAGES } from "./actionTypes";
 import firebase from "firebase";
 import { AUTHORS } from '../../const';
-
-export const deleteMessages = (chatId) => ({
-    type: MESSAGES_DELETE_MESSAGES,
-    payload: chatId,
-});
 
 const getPayloadFromSnapshot = (snapshot) => {
     const messages = [];
@@ -25,6 +20,14 @@ export const addNewMessageWithFirebase = (chatId, message) => async () => {
     setTimeout(() => firebase.database().ref('messages').child(chatId).child(botId).set(botMessage), 1500);
 };
 
+export const deleteMessagesWithFirebase = (chatId) => async () => {
+    firebase.database()
+        .ref('messages')
+        .child(chatId)
+        .remove();
+    console.log('Delete Messages With Firebase ----- DONE');
+};
+
 export const initMessageTracking = () => (dispatch) => {
     firebase.database()
         .ref('messages')
@@ -35,12 +38,24 @@ export const initMessageTracking = () => (dispatch) => {
                 payload,
             });
         });
-};
-
-export const deleteMessagesWithFirebase = (chatId) => async () => {
     firebase.database()
         .ref('messages')
-        .child(chatId)
-        .remove();
-};
+        .on('child_added', (snapshot) => {
+            const payload = getPayloadFromSnapshot(snapshot);
+            dispatch({
+                type: CHANGE_MESSAGES,
+                payload,
+            });
+        });
+    firebase.database()
+        .ref('messages')
+        .on('child_removed', (snapshot) => {
+            const payload = getPayloadFromSnapshot(snapshot);
+            console.log('DELETE MESS payload-------', payload);
+            dispatch({
+                type: DELETE_MESSAGES,
+                payload,
+            });
+        });
 
+};
